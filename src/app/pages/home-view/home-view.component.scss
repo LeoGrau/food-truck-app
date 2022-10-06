@@ -1,0 +1,20 @@
+.mat-card {
+  max-width: 600px;;
+}
+
+.card-container {
+  height: 200px;
+}
+
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.grid3c {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  margin: 0 20px;
+}

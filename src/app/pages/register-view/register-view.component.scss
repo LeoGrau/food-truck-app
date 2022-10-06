@@ -1,0 +1,32 @@
+.table {
+  width: 100vw;
+}
+
+th {
+  border-spacing: 100px;
+}
+
+tr{
+  background-color: lightcyan;
+  padding-left: 20px !important;
+}
+
+td {
+  width: max-content;
+  border-spacing: 100px !important;
+}
+
+.mat-icon {
+  color: #011246;
+  transition: color 0.3s ease;
+}
+
+.mat-icon:hover {
+  color: rgb(255, 217, 91);;
+}
+
+#table {
+  tbody .ng-container {
+    overflow: scro;
+  }
+}

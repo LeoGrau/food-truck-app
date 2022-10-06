@@ -1,0 +1,93 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title> CRUD FoodTruck </mat-card-title>
+    <mat-card-subtitle> {{ editMode? "Edit FoodTruck" : "Add new FoodTruck" }} </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-grid-list cols="2" rowHeight="200px">
+      <mat-grid-tile>
+        <form (submit)="onSubmit()" #offerForm="ngForm">
+          <mat-form-field>
+            <input type="text" maxlength="60" matInput placeholder="Firstname" name="firstname_input" required
+              [(ngModel)]="foodTruckData.ownerFirstName">
+          </mat-form-field>
+          <mat-form-field>
+            <input type="text" matInput placeholder="Lastname" name="lastname_input" required
+              [(ngModel)]="foodTruckData.ownerLastName">
+          </mat-form-field>
+          <mat-form-field>
+            <input type="text" matInput placeholder="FoodTruck" name="brand_input" required
+              [(ngModel)]="foodTruckData.brandName">
+          </mat-form-field>
+          <mat-form-field>
+            <input type="text" matInput placeholder="Email" name="email" required
+              [(ngModel)]="foodTruckData.email">
+          </mat-form-field>
+          <mat-form-field>
+            <input type="text" matInput placeholder="Address" name="address" required
+              [(ngModel)]="foodTruckData.address">
+          </mat-form-field>
+          <ng-container *ngIf="editMode; else elseTemplate">
+            <button mat-button color="primary" class="mat-button-text"> Save </button>
+            <button mat-button color="warn" class="mat-button-text" (click)="cancelEdit()"> Cancel </button>
+          </ng-container>
+          <ng-template #elseTemplate>
+            <button mat-button color="warn" class="mat-button-text" (click)="addFoodTruck()"> Add </button>
+          </ng-template>
+        </form>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <mat-label> Filter </mat-label>
+          <input matInput (keyup)="applyFilter($event)" placeholder="Filter">
+          <mat-icon *ngIf="isFiltering" matSuffix>search</mat-icon>
+        </mat-form-field>
+      </mat-grid-tile>
+    </mat-grid-list>
+
+    <table id="table" style="width: 95vw" mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> Id </th>
+        <td mat-cell *matCellDef="let element"> {{ element.id }} </td>
+      </ng-container>
+      <ng-container matColumnDef="ownerFirstName">
+        <th mat-header-cell *matHeaderCellDef> Firstname </th>
+        <td mat-cell *matCellDef="let element"> {{ element.ownerFirstName }} </td>
+      </ng-container>
+      <ng-container matColumnDef="ownerLastName">
+        <th mat-header-cell *matHeaderCellDef> Lastname </th>
+        <td mat-cell *matCellDef="let element"> {{ element.ownerLastName }} </td>
+      </ng-container>
+      <ng-container matColumnDef="brandName">
+        <th mat-header-cell *matHeaderCellDef> FoodTruck </th>
+        <td mat-cell *matCellDef="let element"> {{ element.brandName }} </td>
+      </ng-container>
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef> Email </th>
+        <td mat-cell *matCellDef="let element"> {{ element.email }} </td>
+      </ng-container>
+      <ng-container matColumnDef="address">
+        <th mat-header-cell *matHeaderCellDef> Address </th>
+        <td mat-cell *matCellDef="let element"> {{ element.address }} </td>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let element">
+          <a href="javascript:void(0)" (click)="editItem(element)">
+            <mat-icon>edit</mat-icon>
+          </a>
+          <a href="javascript:void(0)">
+            <mat-icon>info</mat-icon>
+          </a>
+          <a href="javascript:void(0)" (click)="deleteFoodTruck(element.id)">
+            <mat-icon>delete</mat-icon>
+          </a>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-header-row *matRowDef="let row; columns: displayedColumns;"
+        [ngClass]="{'editable-row': foodTruckData.id == row.id}"></tr>
+    </table>
+    <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
+  </mat-card-content>
+</mat-card>
